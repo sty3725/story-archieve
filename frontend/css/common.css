@@ -32,6 +32,8 @@ body {
     height: 100vh;
 
     transition: transform 0.28s ease;
+
+    border: red 1px solid;
 }
 
 
