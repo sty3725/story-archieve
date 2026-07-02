@@ -1,0 +1,190 @@
+<section class="page-section archive-page" id="archivePage">
+    <header class="page-header archive-page-header">
+        <div class="archive-title-row">
+        <h1>Archive</h1>
+        <span class="mode-label">조회 모드</span>
+        </div>
+
+        <button class="mode-toggle-btn" id="archiveEditToggle" type="button">
+        편집 모드
+        </button>
+    </header>
+
+    <div class="archive-workspace" id="archiveWorkspace">
+        <section class="panel archive-work-list">
+        <div class="panel-header">
+            <h2>작품 목록</h2>
+            <span>3 works</span>
+        </div>
+
+        <div class="mock-list">
+            <button
+            class="mock-list-item selectable-item active"
+            data-select-id="work-1"
+            data-select-type="work"
+            type="button"
+            >
+            검은 도시의 기록
+            </button>
+
+            <button
+            class="mock-list-item selectable-item"
+            data-select-id="work-2"
+            data-select-type="work"
+            type="button"
+            >
+            마녀의 계절
+            </button>
+
+            <button
+            class="mock-list-item selectable-item"
+            data-select-id="work-3"
+            data-select-type="work"
+            type="button"
+            >
+            단편 모음
+            </button>
+        </div>
+
+        <div class="section-actions work-actions edit-only">
+            <div class="action-group">
+            <button class="sub-btn" type="button">새 작품</button>
+            <button class="sub-btn" type="button">이름 변경</button>
+            </div>
+
+            <div class="action-group backup-actions">
+                <button class="sub-btn" type="button" data-archive-action="export">
+                    백업 내보내기
+                </button>
+                <button class="sub-btn" type="button" data-archive-action="import">
+                    백업 들여오기
+                </button>
+            </div>
+        </div>
+        </section>
+
+        <section class="panel archive-structure-panel">
+        <div class="panel-header">
+            <h2>작품 구조</h2>
+            <span>Tree</span>
+        </div>
+
+        <div class="tree-box">
+            <div class="tree-group">
+            <button
+                class="tree-item tree-parent selectable-item"
+                data-select-id="folder-1"
+                data-select-type="folder"
+                type="button"
+            >
+                <span class="tree-toggle">▾</span>
+                <span class="tree-title">1부</span>
+            </button>
+
+            <div class="tree-children">
+                <button
+                class="tree-item tree-child selectable-item active"
+                data-select-id="doc-1"
+                data-select-type="document"
+                type="button"
+                >
+                <span class="tree-line"></span>
+                <span class="tree-title">1화 - 시작</span>
+                </button>
+
+                <button
+                class="tree-item tree-child selectable-item"
+                data-select-id="doc-2"
+                data-select-type="document"
+                type="button"
+                >
+                <span class="tree-line"></span>
+                <span class="tree-title">2화 - 추적</span>
+                </button>
+
+                <button
+                class="tree-item tree-child selectable-item"
+                data-select-id="doc-3"
+                data-select-type="document"
+                type="button"
+                >
+                <span class="tree-line"></span>
+                <span class="tree-title">3화 - 균열</span>
+                </button>
+            </div>
+            </div>
+
+            <div class="tree-group">
+            <button
+                class="tree-item tree-parent selectable-item"
+                data-select-id="folder-2"
+                data-select-type="folder"
+                type="button"
+            >
+                <span class="tree-toggle">▸</span>
+                <span class="tree-title">설정집</span>
+            </button>
+            </div>
+
+            <div class="tree-group">
+            <button
+                class="tree-item tree-parent selectable-item"
+                data-select-id="folder-3"
+                data-select-type="folder"
+                type="button"
+            >
+                <span class="tree-toggle">▸</span>
+                <span class="tree-title">외전</span>
+            </button>
+            </div>
+        </div>
+
+        <div class="section-actions edit-only">
+            <button class="sub-btn" type="button">새 폴더</button>
+            <button class="sub-btn" type="button">새 문서</button>
+            <button class="sub-btn" type="button">이름 변경</button>
+        </div>
+        </section>
+
+        <section class="panel archive-preview-panel">
+        <div class="panel-header">
+            <h2>미리보기</h2>
+            <button class="sub-btn" data-page="editor" type="button">
+            에디터에서 열기
+            </button>
+        </div>
+
+        <article class="preview-document">
+            <h3>1화 - 시작</h3>
+            <p>
+            선택한 문서의 내용을 간단히 보여주는 공간입니다. 나중에 실제 원고
+            데이터와 연결됩니다.
+            </p>
+            <p>
+            이 영역은 실제 문서 내용을 어느 정도 읽을 수 있어야 하므로, 짧은 카드가
+            아니라 화면 아래까지 이어지는 긴 패널로 둡니다.
+            </p>
+            <p>
+            편집 모드에서는 다중 선택, 범위 드래그 선택, 이름 변경, 삭제 같은 관리
+            기능이 노출됩니다.
+            </p>
+        </article>
+
+        <div class="section-actions preview-actions edit-only">
+            <div class="action-buttons">
+            <button class="sub-btn" type="button">문서 이름 변경</button>
+            <button class="danger-btn" type="button">문서 삭제</button>
+            </div>
+
+            <p class="document-note">
+            메모: 초반 도입부 분위기는 유지. 다음 수정 때 인물 대사 밀도를 조금
+            줄이기.
+            </p>
+        </div>
+        </section>
+
+        <div class="selection-box" id="selectionBox"></div>
+    </div>
+</section>
+
+

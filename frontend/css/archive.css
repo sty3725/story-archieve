@@ -1,0 +1,286 @@
+/* ==============================
+   Archive Page
+============================== */
+
+.archive-page {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-page-header {
+    min-height: 72px;
+    margin-bottom: 16px;
+}
+
+.archive-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.archive-title-row h1 {
+    margin: 0;
+    font-size: 40px;
+}
+
+.mode-label {
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.archive-page.is-editing .mode-toggle-btn {
+    background: black;
+    color: white;
+}
+
+.archive-page.is-editing .mode-label {
+    opacity: 1;
+    font-weight: 700;
+}
+
+/* ==============================
+   Archive Workspace
+============================== */
+
+.archive-workspace {
+    position: relative;
+
+    flex: 1;
+    min-height: 0;
+
+    display: grid;
+    grid-template-columns: 240px 320px minmax(0, 1fr);
+    gap: 20px;
+}
+
+.archive-workspace .panel {
+    height: 100%;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==============================
+   Archive Lists
+============================== */
+
+.mock-list,
+.tree-box,
+.preview-document {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.mock-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mock-list-item {
+    padding: 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    background: white;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.mock-list-item.active {
+    border-color: black;
+    font-weight: 700;
+}
+
+/* ==============================
+    Archive Edit Actions
+============================== */
+
+.section-actions {
+    min-height: 44px;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.edit-only {
+    display: none;
+}
+
+.archive-page.is-editing .edit-only {
+    display: flex;
+}
+
+.work-actions {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.action-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.backup-actions {
+    padding-top: 10px;
+    margin-top: 2px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.preview-actions {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.document-note {
+    margin: 0;
+    max-width: 420px;
+
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.65;
+
+    text-align: right;
+}
+
+/* ==============================
+    Archive Tree
+============================== */
+
+.tree-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tree-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.tree-children {
+    margin-left: 18px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(0, 0, 0, 0.22);
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.tree-item {
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    color: black;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.tree-parent {
+    font-weight: 700;
+}
+
+.tree-child {
+    position: relative;
+    font-size: 14px;
+}
+
+.tree-line {
+    width: 10px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.35);
+    flex-shrink: 0;
+}
+
+.tree-toggle {
+    width: 16px;
+    flex-shrink: 0;
+    opacity: 0.75;
+}
+
+.tree-item.active {
+    border-color: black;
+    font-weight: 700;
+}
+
+.archive-page.is-editing .tree-item {
+    cursor: grab;
+}
+
+/* ==============================
+    Archive Selection
+============================== */
+
+.selectable-item {
+    user-select: none;
+}
+
+.selectable-item.is-selected {
+    outline: 2px solid black;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.archive-page.is-editing .selectable-item {
+    cursor: pointer;
+}
+
+.selection-box {
+    position: absolute;
+    display: none;
+    z-index: 20;
+
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.08);
+
+    pointer-events: none;
+}
+
+.archive-page.is-editing .selection-box.is-active {
+    display: block;
+}
+
+/* ==============================
+    Responsive 
+============================== */
+
+@media (max-width: 900px) {
+    .archive-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .archive-workspace .panel {
+        min-height: 320px;
+    }
+
+    .preview-actions {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .document-note {
+        text-align: left;
+    }
+}
