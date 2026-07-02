@@ -2,29 +2,41 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="./css/common.css"/>
 </head>
 
 <body class="public-page">
-<div class="app-layout">
-    <header class="header">
-        <div class="logo"></div>
-        <div class="my-page"></div>
-    </header>
+<div class="app-layout sidebar-closed">
+    <div class="logo">logo</div>
     
-    <aside class="sidebar">
-        <div class="logo"></div>
-        <menu>
-            <div>Archieve</div>
-            <div>Class room</div>
-            <div>setting</div>
+    <aside class="sidebar ">
+        <div class="logo">logo</div>
+        <button class="sidebar-bookmark" id="sidebarBookmark" type="button">
+            Menu
+        </button>
+        <div class="menu_label">Menu</div>
+        <menu class="sidebar-menu">
+            <button type="button" class="menu-item active" data-page="archive">Archive</button>
+            <button type="button" class="menu-item" data-page="classroom">Class room</button>
+            <button type="button" class="menu-item" data-page="statistics">Statistics</button>
         </menu>
-        <div class="shortcut"></div> 
+        <div class="menu_label">shortcut</div>
+        <div class="shortcut">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div> 
+        <div class="profile">
+            <div class="preference"></div>
+            <div class="setting"></div>
+        </div>
     </aside>
 
-<main class="page-content">
-    
+<!-- 메인 컨텐츠 비회원은 그냥 소개템플릿, 회원은 대쉬보드. -->
+<main class="page-content" id="pageContent">
 </main>
 
 </div>
+<script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>
