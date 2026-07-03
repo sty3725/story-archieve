@@ -25,12 +25,51 @@ body {
     color: var(--text-main);
 }
 
+body[data-theme="light"] {
+    --page-bg: #f5f5f5;
+    --page-content-bg: azure;
+    --panel-bg: rgba(255, 255, 255, 0.75);
+    --panel-border: rgba(0, 0, 0, 0.18);
+    --text-main: #111;
+    --text-muted: rgba(0, 0, 0, 0.65);
+}
+body[data-theme="dark"] {
+    --page-bg: #0b111d;
+    --page-content-bg: #000000;
+
+    --panel-bg: rgba(255, 255, 255, 0.075);
+    --panel-border: rgba(210, 225, 255, 0.18);
+
+    --text-main: #eef4ff;
+    --text-muted: rgba(238, 244, 255, 0.62);
+
+    --button-bg: rgba(255, 255, 255, 0.08);
+    --button-bg-hover: rgba(255, 255, 255, 0.14);
+    --button-border: rgba(210, 225, 255, 0.22);
+}
+body[data-theme="custom"] {
+    --page-bg: var(--custom-page-bg);
+    --page-content-bg: var(--custom-page-bg);
+}
+
+
+
+body[data-font-size="small"] {
+    font-size: 14px;
+}
+body[data-font-size="medium"] {
+    font-size: 16px;
+}
+body[data-font-size="large"] {
+    font-size: 18px;
+}
+
 button {
     font: inherit;
 }
 
 /* ==============================
-   App Layout
+    App Layout
 ============================== */
 
 .app-layout {
@@ -42,10 +81,11 @@ button {
     padding: 30px;
     box-sizing: border-box;
     background-color: var(--page-content-bg);
+    color: var(--text-main);
 }
 
 /* ==============================
-   Logo
+    Logo
 ============================== */
 
 .logo {
@@ -57,7 +97,7 @@ button {
 }
 
 /* ==============================
-   Sidebar
+    Sidebar
 ============================== */
 
 .sidebar {
@@ -67,6 +107,8 @@ button {
 
     width: var(--sidebar-width);
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
 
     z-index: 100;
@@ -105,8 +147,14 @@ button {
     z-index: 99;
 }
 
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 /* ==============================
-   Sidebar Menu
+    Sidebar Menu
 ============================== */
 
 .menu_label {
@@ -139,7 +187,7 @@ button {
 }
 
 /* ==============================
-   Common Page
+    Common Page
 ============================== */
 
 .page-section {
@@ -171,7 +219,7 @@ button {
 }
 
 /* ==============================
-   Common Panel
+    Common Panel
 ============================== */
 
 .panel {
@@ -196,7 +244,7 @@ button {
 }
 
 /* ==============================
-   Common Buttons
+    Common Buttons
 ============================== */
 
 .primary-btn,
@@ -230,6 +278,120 @@ button {
     background: white;
     color: black;
 }
+
+
+/* ==============================
+    Preference 패널 CSS
+===============================*/
+
+.preference-panel {
+    position: fixed;
+    left: calc(var(--sidebar-width) + 16px);
+    bottom: 24px;
+
+    width: 320px;
+    padding: 18px;
+
+    z-index: 200;
+
+    border: 1px solid var(--panel-border);
+    background: var(--panel-bg);
+    color: var(--text-main);
+
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+
+.sidebar-closed .preference-panel {
+    left: calc(var(--bookmark-width) + 16px);
+}
+
+.sidebar-open .preference-panel {
+    left: calc(var(--sidebar-width) + 16px);
+}
+
+.preference-panel[hidden] {
+    display: none;
+}
+
+.preference-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.preference-header h2 {
+    margin: 0;
+}
+
+.preference-group {
+    padding: 12px 0;
+    border-top: 1px solid var(--panel-border);
+}
+
+.preference-group h3 {
+    margin: 0 0 10px;
+    font-size: 14px;
+}
+
+.preference-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.preference-option {
+    padding: 8px 10px;
+    border: 1px solid var(--panel-border);
+    background: transparent;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.preference-option.is-active {
+    background: var(--text-main);
+    color: var(--page-content-bg);
+}
+
+.color-picker-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.color-picker-row input {
+    width: 72px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid var(--panel-border);
+    background: transparent;
+}
+
+body:not([data-theme="custom"]) #customBackgroundGroup {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+
+.preference-btn {
+    width: 100%;
+    padding: 10px 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    color: white;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.preference-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
 
 /* ==============================
    Temporary Layouts

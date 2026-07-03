@@ -1,6 +1,7 @@
-/* ==============================
-   Archive Page
-============================== */
+/* =========================================================
+   1. Archive Page 기본 레이아웃
+   - Archive 페이지 전체 높이와 헤더 구조
+========================================================= */
 
 .archive-page {
     min-height: calc(100vh - 60px);
@@ -39,9 +40,11 @@
     font-weight: 700;
 }
 
-/* ==============================
-   Archive Workspace
-============================== */
+
+/* =========================================================
+   2. Archive Workspace
+   - 작품 목록 / 작품 구조 / 미리보기 3단 패널
+========================================================= */
 
 .archive-workspace {
     position: relative;
@@ -62,9 +65,11 @@
     flex-direction: column;
 }
 
-/* ==============================
-   Archive Lists
-============================== */
+
+/* =========================================================
+   3. 공통 스크롤 영역
+   - 작품 목록, 트리, 미리보기는 패널 안에서 스크롤 가능
+========================================================= */
 
 .mock-list,
 .tree-box,
@@ -74,41 +79,120 @@
     overflow-y: auto;
 }
 
-.mock-list {
+
+/* =========================================================
+   4. 작품 목록
+   - 현재 문제였던 버튼 가로 배치 방지
+   - 작품 버튼을 세로 리스트로 고정
+========================================================= */
+
+.archive-work-list .mock-list {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 8px;
+
+    width: 100%;
 }
 
-.mock-list-item {
-    padding: 10px;
+.archive-work-list .mock-list-item {
+    display: block;
+    width: 100%;
+
+    padding: 10px 12px;
 
     border: 1px solid rgba(0, 0, 0, 0.16);
     background: white;
+    color: black;
 
     text-align: left;
     cursor: pointer;
 }
 
-.mock-list-item.active {
+.archive-work-list .mock-list-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.archive-work-list .mock-list-item.active {
     border-color: black;
     font-weight: 700;
+    background: rgba(0, 0, 0, 0.06);
 }
 
-/* ==============================
-    Archive Edit Actions
-============================== */
 
-.section-actions {
-    min-height: 44px;
-    padding-top: 12px;
-    margin-top: 12px;
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
+/* =========================================================
+   5. Archive 편집 툴바
+   - 편집 모드에서만 보이는 새로 만들기 / 이름 바꾸기 / 삭제
+========================================================= */
+
+.archive-edit-toolbar {
+    position: relative;
+
+    margin-bottom: 12px;
+    padding: 10px 12px;
+
+    border: 1px solid var(--panel-border);
+    background: var(--panel-bg);
 
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 8px;
 }
+
+.selected-count {
+    margin-left: auto;
+    font-size: 13px;
+    opacity: 0.68;
+}
+
+
+/* =========================================================
+   6. 새로 만들기 메뉴
+   - 새 작품 / 새 구성 / 새 문서 선택 메뉴
+========================================================= */
+
+.create-menu {
+    width: 180px;
+    margin: -6px 0 12px;
+    padding: 8px;
+
+    border: 1px solid var(--panel-border);
+    background: var(--panel-bg);
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.create-menu[hidden] {
+    display: none;
+}
+
+.create-menu button {
+    padding: 8px 10px;
+
+    border: 1px solid var(--panel-border);
+    background: transparent;
+    color: var(--text-main);
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.create-menu button:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+body[data-theme="dark"] .create-menu button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   7. 편집 모드 전용 표시
+   - edit-only 요소는 기본 숨김
+   - Archive가 편집 모드일 때만 표시
+========================================================= */
 
 .edit-only {
     display: none;
@@ -118,48 +202,36 @@
     display: flex;
 }
 
-.work-actions {
-    flex-direction: column;
-    align-items: stretch;
-}
 
-.action-group {
+/* =========================================================
+   8. 백업 액션
+   - 내보내기 / 들여오기 버튼 영역
+   - 기존 새 작품/새 문서 버튼들과 분리
+========================================================= */
+
+.section-actions {
+    min-height: 44px;
+    padding-top: 12px;
+    margin-top: 12px;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
 .backup-actions {
-    padding-top: 10px;
-    margin-top: 2px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.preview-actions {
-    align-items: center;
-    justify-content: space-between;
-}
-
-.action-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.document-note {
-    margin: 0;
-    max-width: 420px;
 
-    font-size: 12px;
-    line-height: 1.5;
-    opacity: 0.65;
-
-    text-align: right;
-}
-
-/* ==============================
-    Archive Tree
-============================== */
+/* =========================================================
+   9. 작품 구조 트리
+   - 구성 / 문서 계층 표시
+========================================================= */
 
 .tree-box {
     display: flex;
@@ -182,6 +254,10 @@
     gap: 6px;
 }
 
+.tree-children[hidden] {
+    display: none;
+}
+
 .tree-item {
     width: 100%;
     min-height: 36px;
@@ -199,6 +275,10 @@
     cursor: pointer;
 }
 
+.tree-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
 .tree-parent {
     font-weight: 700;
 }
@@ -211,6 +291,7 @@
 .tree-line {
     width: 10px;
     height: 1px;
+
     background: rgba(0, 0, 0, 0.35);
     flex-shrink: 0;
 }
@@ -224,23 +305,63 @@
 .tree-item.active {
     border-color: black;
     font-weight: 700;
+    background: rgba(0, 0, 0, 0.06);
 }
 
 .archive-page.is-editing .tree-item {
     cursor: grab;
 }
 
-/* ==============================
-    Archive Selection
-============================== */
+
+/* =========================================================
+   10. 조회 모드 미리보기
+   - 오른쪽 문서 미리보기 영역
+========================================================= */
+
+.preview-document {
+    padding-right: 8px;
+    line-height: 1.7;
+}
+
+.preview-meta {
+    margin-bottom: 10px;
+    font-size: 13px;
+    opacity: 0.62;
+}
+
+.preview-document h3 {
+    margin: 0 0 18px;
+    font-size: 26px;
+}
+
+.preview-body {
+    line-height: 1.8;
+}
+
+.preview-body p {
+    margin: 0 0 14px;
+}
+
+.empty-message {
+    margin: 0;
+    opacity: 0.6;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   11. 편집 모드 선택 표시
+   - 드래그 선택 / 클릭 선택 시 붉은색으로 강조
+========================================================= */
 
 .selectable-item {
     user-select: none;
 }
 
 .selectable-item.is-selected {
-    outline: 2px solid black;
-    background: rgba(0, 0, 0, 0.08);
+    outline: 2px solid rgba(190, 40, 40, 0.85);
+    background: rgba(255, 90, 90, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 120, 120, 0.55);
 }
 
 .archive-page.is-editing .selectable-item {
@@ -252,8 +373,8 @@
     display: none;
     z-index: 20;
 
-    border: 1px solid rgba(0, 0, 0, 0.75);
-    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(190, 40, 40, 0.85);
+    background: rgba(255, 90, 90, 0.12);
 
     pointer-events: none;
 }
@@ -262,9 +383,43 @@
     display: block;
 }
 
-/* ==============================
-    Responsive 
-============================== */
+
+/* =========================================================
+   12. 다크 모드 보정
+   - common.css의 body[data-theme="dark"] 변수와 함께 동작
+========================================================= */
+
+body[data-theme="dark"] .archive-work-list .mock-list-item,
+body[data-theme="dark"] .tree-item {
+    border-color: var(--panel-border);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-main);
+}
+
+body[data-theme="dark"] .archive-work-list .mock-list-item:hover,
+body[data-theme="dark"] .tree-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body[data-theme="dark"] .archive-work-list .mock-list-item.active,
+body[data-theme="dark"] .tree-item.active {
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+body[data-theme="dark"] .tree-children {
+    border-left-color: rgba(255, 255, 255, 0.22);
+}
+
+body[data-theme="dark"] .tree-line {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================================================
+   13. Responsive
+   - 화면이 좁으면 3단 패널을 세로로 쌓음
+========================================================= */
 
 @media (max-width: 900px) {
     .archive-workspace {
@@ -275,12 +430,13 @@
         min-height: 320px;
     }
 
-    .preview-actions {
+    .archive-edit-toolbar {
         align-items: flex-start;
-        flex-direction: column;
+        flex-wrap: wrap;
     }
 
-    .document-note {
-        text-align: left;
+    .selected-count {
+        width: 100%;
+        margin-left: 0;
     }
 }

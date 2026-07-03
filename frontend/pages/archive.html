@@ -9,15 +9,27 @@
         편집 모드
         </button>
     </header>
+    <div class="archive-edit-toolbar edit-only">
+        <button class="sub-btn" type="button" id="archiveCreateBtn">새로 만들기</button>
+        <button class="sub-btn" type="button" id="archiveRenameBtn">이름 바꾸기</button>
+        <button class="danger-btn" type="button" id="archiveDeleteBtn">삭제</button>
+        <span class="selected-count" id="archiveSelectedCount">선택 없음</span>
+    </div>
+
+    <div class="create-menu" id="archiveCreateMenu" hidden>
+        <button type="button" data-create-type="work">새 작품</button>
+        <button type="button" data-create-type="folder">새 구성</button>
+        <button type="button" data-create-type="document">새 문서</button>
+    </div>
 
     <div class="archive-workspace" id="archiveWorkspace">
         <section class="panel archive-work-list">
         <div class="panel-header">
             <h2>작품 목록</h2>
-            <span>3 works</span>
+            <span id="workCountLabel">3 works</span>
         </div>
 
-        <div class="mock-list">
+        <div class="mock-list" id="workList">
             <button
             class="mock-list-item selectable-item active"
             data-select-id="work-1"
@@ -47,17 +59,14 @@
         </div>
 
         <div class="section-actions work-actions edit-only">
-            <div class="action-group">
-            <button class="sub-btn" type="button">새 작품</button>
-            <button class="sub-btn" type="button">이름 변경</button>
-            </div>
+            
 
             <div class="action-group backup-actions">
                 <button class="sub-btn" type="button" data-archive-action="export">
-                    백업 내보내기
+                    내보내기
                 </button>
                 <button class="sub-btn" type="button" data-archive-action="import">
-                    백업 들여오기
+                    들여오기
                 </button>
             </div>
         </div>
@@ -66,10 +75,10 @@
         <section class="panel archive-structure-panel">
         <div class="panel-header">
             <h2>작품 구조</h2>
-            <span>Tree</span>
+            <span id="structureLabel">Tree</span>
         </div>
 
-        <div class="tree-box">
+        <div class="tree-box" id="structureTree">
             <div class="tree-group">
             <button
                 class="tree-item tree-parent selectable-item"
@@ -139,11 +148,7 @@
             </div>
         </div>
 
-        <div class="section-actions edit-only">
-            <button class="sub-btn" type="button">새 폴더</button>
-            <button class="sub-btn" type="button">새 문서</button>
-            <button class="sub-btn" type="button">이름 변경</button>
-        </div>
+        
         </section>
 
         <section class="panel archive-preview-panel">
@@ -154,7 +159,7 @@
             </button>
         </div>
 
-        <article class="preview-document">
+        <article class="preview-document" id="previewDocument">
             <h3>1화 - 시작</h3>
             <p>
             선택한 문서의 내용을 간단히 보여주는 공간입니다. 나중에 실제 원고
@@ -171,11 +176,6 @@
         </article>
 
         <div class="section-actions preview-actions edit-only">
-            <div class="action-buttons">
-            <button class="sub-btn" type="button">문서 이름 변경</button>
-            <button class="danger-btn" type="button">문서 삭제</button>
-            </div>
-
             <p class="document-note">
             메모: 초반 도입부 분위기는 유지. 다음 수정 때 인물 대사 밀도를 조금
             줄이기.
