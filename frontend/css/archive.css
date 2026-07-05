@@ -4,9 +4,7 @@
 ========================================================= */
 
 .archive-page {
-    min-height: calc(100vh - 60px);
-    display: flex;
-    flex-direction: column;
+    width: min(100%, 1680px);
 }
 
 .archive-page-header {
@@ -53,7 +51,7 @@
     min-height: 0;
 
     display: grid;
-    grid-template-columns: 240px 320px minmax(0, 1fr);
+    grid-template-columns: 280px 360px minmax(0, 1fr);
     gap: 20px;
 }
 
@@ -245,6 +243,7 @@ body[data-theme="dark"] .create-menu button:hover {
 }
 
 .tree-children {
+    margin-top: 8px;
     margin-left: 18px;
     padding-left: 12px;
     border-left: 1px solid rgba(0, 0, 0, 0.22);

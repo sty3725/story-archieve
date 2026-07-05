@@ -12,8 +12,8 @@
     
     <aside class="sidebar ">
         <div class="logo">logo</div>
-        <button class="sidebar-bookmark" id="sidebarBookmark" type="button">
-            Menu
+        <button class="sidebar-bookmark" id="sidebarBookmark" type="button" aria-label="사이드바 열기">
+            <img src="./media/bookmark.png" alt="" />
         </button>
         <div class="menu_label">Menu</div>
         <menu class="sidebar-menu">
@@ -41,6 +41,52 @@
         </div>
 
         <section class="preference-group">
+            <h3>사이드바 색상</h3>
+
+            <div class="sidebar-preset-grid">
+                <button type="button" class="sidebar-color-preset" data-sidebar-preset="midnight">
+                    <span style="background:#050913;"></span>
+                    Midnight
+                </button>
+
+                <button type="button" class="sidebar-color-preset" data-sidebar-preset="violet">
+                    <span style="background:#34135f;"></span>
+                    Violet
+                </button>
+
+                <button type="button" class="sidebar-color-preset" data-sidebar-preset="deepBlue">
+                    <span style="background:#073b72;"></span>
+                    Deep Blue
+                </button>
+
+                <button type="button" class="sidebar-color-preset" data-sidebar-preset="emerald">
+                    <span style="background:#064e3b;"></span>
+                    Emerald
+                </button>
+
+                <button type="button" class="sidebar-color-preset" data-sidebar-preset="wine">
+                    <span style="background:#5f1238;"></span>
+                    Wine
+                </button>
+
+                <button type="button" class="sidebar-color-preset" data-sidebar-preset="slate">
+                    <span style="background:#1f2937;"></span>
+                    Slate
+                </button>
+            </div>
+
+            <div class="preference-options sidebar-extra-options">
+                <button type="button" class="preference-option" id="sidebarDefaultBtn">
+                    기본
+                </button>
+
+                <button type="button" class="preference-option" id="sidebarRandomBtn">
+                    랜덤
+                </button>
+            </div>
+            
+                
+                
             <h3>테마</h3>
 
             <div class="preference-options">
@@ -54,10 +100,17 @@
                     Custom
                 </button>
             </div>
+
+
         </section>
 
         <section class="preference-group" id="customBackgroundGroup">
             <h3>사용자 배경색</h3>
+
+            <label class="color-picker-row sidebar-color-row" id="customSidebarGroup">
+                <span>Sidebar</span>
+                <input type="color" id="customSidebarInput" value="#050913" />
+            </label>
 
             <label class="color-picker-row">
                 <span>Background</span>

@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from routers import archive
+
 app = FastAPI()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,6 +15,8 @@ app.mount("/css", StaticFiles(directory=FRONTEND_DIR / "css"), name="css")
 app.mount("/js", StaticFiles(directory=FRONTEND_DIR / "js"), name="js")
 app.mount("/media", StaticFiles(directory=FRONTEND_DIR / "media"), name="media")
 app.mount("/pages", StaticFiles(directory=FRONTEND_DIR / "pages"), name="pages")
+
+app.include_router(archive.router)
 
 
 @app.get("/")

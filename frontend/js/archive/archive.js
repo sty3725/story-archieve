@@ -124,7 +124,7 @@ let archiveInitialized = false;
    초기화
 ========================================================= */
 
-function initArchivePage() {
+async function initArchivePage() {
     const archivePage = document.querySelector("#archivePage");
     const editToggle = document.querySelector("#archiveEditToggle");
     const modeLabel = document.querySelector(".mode-label");
@@ -133,7 +133,8 @@ function initArchivePage() {
 
     archiveInitialized = false;
 
-    loadArchiveData();
+    await loadArchiveData();
+
     restoreArchiveState();
     restoreTreeState();
     ensureValidArchiveState();
@@ -167,9 +168,43 @@ function initArchivePage() {
    데이터 로딩 / 저장
 ========================================================= */
 
-function loadArchiveData() {
-    archiveStore = structuredCloneSafe(archiveDummyData);
+function isSameId(a, b) {
+    return String(a) === String(b);
 }
+
+
+async function loadArchiveData() {
+    try {
+        const response = await fetch("/api/archive/works");
+
+        if (!response.ok) {
+            throw new Error("Archive data load failed");
+        }
+
+        archiveStore = await response.json();
+    } catch (error) {
+        console.warn("백엔드 데이터를 불러오지 못해서 더미 데이터를 사용합니다.", error);
+        archiveStore = structuredCloneSafe(archiveDummyData);
+    }
+
+    normalizeArchiveStore();
+}
+
+function normalizeArchiveStore() {
+    archiveStore.forEach((work) => {
+        work.folders.forEach((folder, index) => {
+            if (typeof folder.expanded !== "boolean") {
+                folder.expanded = index === 0;
+            }
+
+            if (!Array.isArray(folder.documents)) {
+                folder.documents = [];
+            }
+        });
+    });
+}
+
+
 
 function structuredCloneSafe(data) {
     if (typeof structuredClone === "function") {
@@ -291,7 +326,7 @@ function renderWorkList() {
     if (!workList) return;
 
     workList.innerHTML = archiveStore.map((work) => {
-        const isActive = work.id === currentArchiveState.workId;
+        const isActive = isSameId(work.id, currentArchiveState.workId);
 
         return `
             <button
@@ -330,7 +365,7 @@ function renderStructureTree() {
 
     structureTree.innerHTML = currentWork.folders.map((folder) => {
         const childrenHtml = folder.documents.map((documentItem) => {
-            const isActive = documentItem.id === currentArchiveState.documentId;
+            const isActive = isSameId(documentItem.id, currentArchiveState.documentId);
 
             return `
                 <button
@@ -856,7 +891,7 @@ function createDocument(title) {
 
 function renameArchiveItem(id, type, newName) {
     if (type === "work") {
-        const work = archiveStore.find((item) => item.id === id);
+        const work = archiveStore.find((item) => isSameId(item.id, id));
         if (work) work.title = newName;
     }
 
@@ -875,7 +910,7 @@ function renameArchiveItem(id, type, newName) {
 
 function deleteArchiveItem(id, type) {
     if (type === "work") {
-        archiveStore = archiveStore.filter((work) => work.id !== id);
+        archiveStore = archiveStore.filter((work) => !isSameId(work.id, id));
 
         if (currentArchiveState.workId === id) {
             currentArchiveState.workId = null;
@@ -885,7 +920,7 @@ function deleteArchiveItem(id, type) {
 
     if (type === "folder") {
         archiveStore.forEach((work) => {
-            work.folders = work.folders.filter((folder) => folder.id !== id);
+            work.folders = work.folders.filter((folder) => !isSameId(folder.id, id));
         });
     }
 
@@ -893,7 +928,7 @@ function deleteArchiveItem(id, type) {
         archiveStore.forEach((work) => {
             work.folders.forEach((folder) => {
                 folder.documents = folder.documents.filter((documentItem) => {
-                    return documentItem.id !== id;
+                    return !isSameId(documentItem.id, id);
                 });
             });
         });
@@ -958,7 +993,9 @@ function importArchiveBackup() {
 ========================================================= */
 
 function getCurrentWork() {
-    return archiveStore.find((work) => work.id === currentArchiveState.workId) || null;
+    return archiveStore.find((work) => {
+        return isSameId(work.id, currentArchiveState.workId);
+    }) || null;
 }
 
 function getCurrentDocument() {
@@ -979,7 +1016,10 @@ function findFirstDocumentInWork(work) {
 
 function findFolderById(folderId) {
     for (const work of archiveStore) {
-        const folder = work.folders.find((item) => item.id === folderId);
+        const folder = work.folders.find((item) => {
+            return isSameId(item.id, folderId);
+        });
+
         if (folder) return folder;
     }
 
@@ -989,7 +1029,10 @@ function findFolderById(folderId) {
 function findDocumentById(documentId) {
     for (const work of archiveStore) {
         for (const folder of work.folders) {
-            const documentItem = folder.documents.find((item) => item.id === documentId);
+            const documentItem = folder.documents.find((item) => {
+                return isSameId(item.id, documentId);
+            });
+
             if (documentItem) return documentItem;
         }
     }

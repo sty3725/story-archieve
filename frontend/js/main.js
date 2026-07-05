@@ -180,9 +180,44 @@ const PREFERENCE_STORAGE_KEY = "storyArchive.preferences";
 const defaultPreferences = {
     theme: "light",
     customBackground: "#f5f5f5",
-    fontSize: "medium"
+    fontSize: "medium",
+
+    sidebarMode: "default",
+    sidebarPreset: "midnight",
+    customSidebarBackground: "#050913"
 };
 
+const sidebarPresetColors = {
+    midnight: "#050913",
+    violet: "#34135f",
+    deepBlue: "#073b72",
+    emerald: "#064e3b",
+    wine: "#5f1238",
+    slate: "#1f2937"
+};
+
+const sidebarRandomColors = [
+    "#050913", // midnight
+    "#0f172a", // navy slate
+    "#111827", // charcoal navy
+    "#1e1b4b", // indigo
+    "#312e81", // royal indigo
+    "#34135f", // violet
+    "#4c1d95", // purple
+    "#581c87", // deep purple
+    "#073b72", // deep blue
+    "#0c4a6e", // ocean
+    "#155e75", // cyan teal
+    "#064e3b", // emerald
+    "#065f46", // green teal
+    "#14532d", // forest
+    "#3f2a17", // coffee
+    "#4a1d1f", // oxblood
+    "#5f1238", // wine
+    "#7f1d1d", // dark red
+    "#1f2937", // slate
+    "#243b53"  // steel blue
+];
 
 /* =========================================================
     11. Preference 초기화
@@ -235,19 +270,31 @@ function savePreferences(preferences) {
     14. Preference 적용
     - body의 data 속성과 CSS 변수를 갱신한다.
 ========================================================= */
-
 function applyPreferences(preferences) {
     document.body.dataset.theme = preferences.theme;
     document.body.dataset.fontSize = preferences.fontSize;
+    document.body.dataset.sidebarMode = preferences.sidebarMode;
 
     document.body.style.setProperty(
         "--custom-page-bg",
         preferences.customBackground
     );
 
+    applySidebarPreference(preferences);
     syncPreferenceUI(preferences);
 }
 
+function applySidebarPreference(preferences) {
+    if (preferences.sidebarMode === "default") {
+        document.body.style.removeProperty("--sidebar-bg");
+        return;
+    }
+
+    document.body.style.setProperty(
+        "--sidebar-bg",
+        preferences.customSidebarBackground
+    );
+}
 
 /* =========================================================
     15. Preference 이벤트 연결
@@ -262,10 +309,15 @@ function bindPreferenceEvents(preferences) {
     const preferenceToggle = document.querySelector("#preferenceToggle");
     const preferencePanel = document.querySelector("#preferencePanel");
     const preferenceCloseBtn = document.querySelector("#preferenceCloseBtn");
+
     const themeButtons = document.querySelectorAll("[data-theme-option]");
     const fontSizeButtons = document.querySelectorAll("[data-font-size-option]");
     const customBackgroundInput = document.querySelector("#customBackgroundInput");
     const resetButton = document.querySelector("#resetPreferenceBtn");
+
+    const sidebarPresetButtons = document.querySelectorAll("[data-sidebar-preset]");
+    const sidebarDefaultBtn = document.querySelector("#sidebarDefaultBtn");
+    const sidebarRandomBtn = document.querySelector("#sidebarRandomBtn");
 
     if (preferenceToggle && preferencePanel) {
         preferenceToggle.addEventListener("click", () => {
@@ -304,20 +356,62 @@ function bindPreferenceEvents(preferences) {
         });
     }
 
+    sidebarPresetButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const presetName = button.dataset.sidebarPreset;
+            const presetColor = sidebarPresetColors[presetName];
+
+            if (!presetColor) return;
+
+            preferences.sidebarMode = "preset";
+            preferences.sidebarPreset = presetName;
+            preferences.customSidebarBackground = presetColor;
+
+            savePreferences(preferences);
+            applyPreferences(preferences);
+        });
+    });
+
+    if (sidebarDefaultBtn) {
+        sidebarDefaultBtn.addEventListener("click", () => {
+            preferences.sidebarMode = "default";
+            preferences.sidebarPreset = "midnight";
+            preferences.customSidebarBackground = defaultPreferences.customSidebarBackground;
+
+            savePreferences(preferences);
+            applyPreferences(preferences);
+        });
+    }
+
+    if (sidebarRandomBtn) {
+        sidebarRandomBtn.addEventListener("click", () => {
+            const randomIndex = Math.floor(Math.random() * sidebarRandomColors.length);
+            const randomColor = sidebarRandomColors[randomIndex];
+
+            preferences.sidebarMode = "random";
+            preferences.sidebarPreset = "";
+            preferences.customSidebarBackground = randomColor;
+
+            savePreferences(preferences);
+            applyPreferences(preferences);
+        });
+    }
+
     if (resetButton) {
         resetButton.addEventListener("click", () => {
-            const resetPreferences = { ...defaultPreferences };
+            preferences.theme = defaultPreferences.theme;
+            preferences.customBackground = defaultPreferences.customBackground;
+            preferences.fontSize = defaultPreferences.fontSize;
 
-            preferences.theme = resetPreferences.theme;
-            preferences.customBackground = resetPreferences.customBackground;
-            preferences.fontSize = resetPreferences.fontSize;
+            preferences.sidebarMode = defaultPreferences.sidebarMode;
+            preferences.sidebarPreset = defaultPreferences.sidebarPreset;
+            preferences.customSidebarBackground = defaultPreferences.customSidebarBackground;
 
             savePreferences(preferences);
             applyPreferences(preferences);
         });
     }
 }
-
 
 /* =========================================================
     16. Preference UI 동기화
@@ -328,6 +422,10 @@ function syncPreferenceUI(preferences) {
     const themeButtons = document.querySelectorAll("[data-theme-option]");
     const fontSizeButtons = document.querySelectorAll("[data-font-size-option]");
     const customBackgroundInput = document.querySelector("#customBackgroundInput");
+
+    const sidebarPresetButtons = document.querySelectorAll("[data-sidebar-preset]");
+    const sidebarDefaultBtn = document.querySelector("#sidebarDefaultBtn");
+    const sidebarRandomBtn = document.querySelector("#sidebarRandomBtn");
 
     themeButtons.forEach((button) => {
         button.classList.toggle(
@@ -345,6 +443,28 @@ function syncPreferenceUI(preferences) {
 
     if (customBackgroundInput) {
         customBackgroundInput.value = preferences.customBackground;
+    }
+
+    sidebarPresetButtons.forEach((button) => {
+        button.classList.toggle(
+            "is-active",
+            preferences.sidebarMode === "preset" &&
+            button.dataset.sidebarPreset === preferences.sidebarPreset
+        );
+    });
+
+    if (sidebarDefaultBtn) {
+        sidebarDefaultBtn.classList.toggle(
+            "is-active",
+            preferences.sidebarMode === "default"
+        );
+    }
+
+    if (sidebarRandomBtn) {
+        sidebarRandomBtn.classList.toggle(
+            "is-active",
+            preferences.sidebarMode === "random"
+        );
     }
 }
 

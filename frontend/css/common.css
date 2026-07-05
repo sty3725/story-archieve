@@ -12,6 +12,10 @@
 
     --text-main: #111;
     --text-muted: rgba(0, 0, 0, 0.65);
+
+    --sidebar-bg: #000000;
+    --sidebar-text: #ffffff;
+    --sidebar-border: rgba(255, 255, 255, 0.18);
 }
 
 * {
@@ -26,18 +30,16 @@ body {
 }
 
 body[data-theme="light"] {
-    --page-bg: #f5f5f5;
-    --page-content-bg: azure;
-    --panel-bg: rgba(255, 255, 255, 0.75);
-    --panel-border: rgba(0, 0, 0, 0.18);
-    --text-main: #111;
-    --text-muted: rgba(0, 0, 0, 0.65);
+    --sidebar-bg: #000000;
+    --sidebar-text: #ffffff;
+    --sidebar-border: rgba(255, 255, 255, 0.22);
 }
+
 body[data-theme="dark"] {
     --page-bg: #0b111d;
-    --page-content-bg: #000000;
+    --page-content-bg: #101826;
 
-    --panel-bg: rgba(255, 255, 255, 0.075);
+    --panel-bg: rgba(22, 32, 48, 0.82);
     --panel-border: rgba(210, 225, 255, 0.18);
 
     --text-main: #eef4ff;
@@ -46,13 +48,16 @@ body[data-theme="dark"] {
     --button-bg: rgba(255, 255, 255, 0.08);
     --button-bg-hover: rgba(255, 255, 255, 0.14);
     --button-border: rgba(210, 225, 255, 0.22);
+
+    --sidebar-bg: #050913;
+    --sidebar-text: #eef4ff;
+    --sidebar-border: rgba(210, 225, 255, 0.2);
 }
+
 body[data-theme="custom"] {
     --page-bg: var(--custom-page-bg);
     --page-content-bg: var(--custom-page-bg);
 }
-
-
 
 body[data-font-size="small"] {
     font-size: 14px;
@@ -63,6 +68,9 @@ body[data-font-size="medium"] {
 body[data-font-size="large"] {
     font-size: 18px;
 }
+
+
+
 
 button {
     font: inherit;
@@ -107,15 +115,20 @@ button {
 
     width: var(--sidebar-width);
     height: 100vh;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
 
     z-index: 100;
     transition: transform 0.28s ease;
 
-    background-color: black;
-    color: white;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-color-row {
+    margin-top: 12px;
 }
 
 .sidebar > .logo {
@@ -132,20 +145,41 @@ button {
     transform: translateX(0);
 }
 
+
 .sidebar-bookmark {
     position: absolute;
     top: 100px;
     right: calc(-1 * var(--bookmark-width));
 
     width: var(--bookmark-width);
-    height: 30px;
+    height: 42px;
 
-    border: black 1px solid;
-    background: white;
+    padding: 0;
+    border: none;
+    background: transparent;
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     z-index: 99;
 }
+
+.sidebar-bookmark img {
+    width: 60px;
+    height: auto;
+    left: 0;
+}
+
+.sidebar-bookmark:hover img {
+    transform: translateX(3px);
+}
+
+.sidebar-bookmark img {
+    transition: transform 0.18s ease, filter 0.18s ease;
+}
+
 
 .sidebar-bottom {
     margin-top: auto;
@@ -170,20 +204,62 @@ button {
     margin: 16px 0;
 }
 
-.menu-item {
+
+.menu-item,
+.preference-btn {
     width: 100%;
     padding: 10px 12px;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid var(--sidebar-border);
     background: transparent;
-    color: white;
+    color: var(--sidebar-text);
 
     text-align: left;
     cursor: pointer;
 }
 
-.menu-item.active {
-    background: rgba(255, 255, 255, 0.18);
+.menu-item.active,
+.preference-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.sidebar-preset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.sidebar-color-preset {
+    padding: 8px 10px;
+
+    border: 1px solid var(--panel-border);
+    background: transparent;
+    color: var(--text-main);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    cursor: pointer;
+}
+
+.sidebar-color-preset span {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.sidebar-color-preset.is-active {
+    background: var(--text-main);
+    color: var(--page-content-bg);
+}
+
+.sidebar-extra-options {
+    margin-top: 10px;
 }
 
 /* ==============================
@@ -191,7 +267,7 @@ button {
 ============================== */
 
 .page-section {
-    max-width: 1280px;
+    width: min(100%, 1520px);
     margin: 0 auto;
 }
 
@@ -375,22 +451,6 @@ body:not([data-theme="custom"]) #customBackgroundGroup {
     pointer-events: none;
 }
 
-
-.preference-btn {
-    width: 100%;
-    padding: 10px 12px;
-
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: transparent;
-    color: white;
-
-    text-align: left;
-    cursor: pointer;
-}
-
-.preference-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-}
 
 
 /* ==============================
