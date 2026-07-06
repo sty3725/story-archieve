@@ -4,14 +4,14 @@
 <head>
     <link rel="stylesheet" href="./css/common.css" />
     <link rel="stylesheet" href="./css/archive.css" />
+    <link rel="stylesheet" href="./css/auth.css" />
 </head>
 
-<body class="public-page">
+<body>
 <div class="app-layout sidebar-closed">
-    <div class="logo">logo</div>
     
     <aside class="sidebar ">
-        <div class="logo">logo</div>
+        <div class="logo"><img src="./media/logo.png" /></div>
         <button class="sidebar-bookmark" id="sidebarBookmark" type="button" aria-label="사이드바 열기">
             <img src="./media/bookmark.png" alt="" />
         </button>
@@ -28,7 +28,12 @@
             <div></div>
         </div> 
         <div class="sidebar-bottom">
-            <button class="preference-btn" id="preferenceToggle" type="button">
+            <button class="profile-button" id="profileButton" type="button" data-page="mypage">
+                <span class="profile-avatar">U</span>
+                <span class="profile-name" id="profileName">User</span>
+            </button>
+
+            <button class="sidebar-menu-btn" id="preferenceToggle" type="button">
                 Preference
             </button>
         </div>
@@ -146,7 +151,8 @@
 <main class="page-content" id="pageContent">
 </main>
 
-<script type="text/javascript" src="./js/main.js"></script>
 <script type="text/javascript" src="./js/archive/archive.js"></script>
+<script src="./js/auth.js"></script>
+<script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>

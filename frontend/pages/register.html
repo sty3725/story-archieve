@@ -1,30 +1,66 @@
-<!DOCTYPE html>
-<html>
+<section class="page-section auth-page" id="authPage">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Register</h1>
+            <p>Story Archive에 사용할 계정을 만듭니다.</p>
+        </div>
 
-<head>
-</head>
+        <form class="auth-form" id="registerForm">
+            <label class="auth-field">
+                <span>Email</span>
+                <input
+                    type="email"
+                    id="registerEmail"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required
+                />
+            </label>
 
-<body class="public-page login">
-<div class="app-layout">
-    <header class="header">
-        <div class="logo"></div>
-        <div class="my-page"></div>
-    </header>
-    
-    <aside class="sidebar">
-        <div class="logo"></div>
-        <menu>
-            <div>Archieve</div>
-            <div>Class room</div>
-            <div>setting</div>
-        </menu>
-        <div class="shortcut"></div> 
-    </aside>
+            <label class="auth-field">
+                <span>Username</span>
+                <input
+                    type="text"
+                    id="registerUsername"
+                    autocomplete="username"
+                    placeholder="사용자 이름"
+                    required
+                />
+            </label>
 
-<main class="page-content">
-    
-</main>
+            <label class="auth-field">
+                <span>Password</span>
+                <input
+                    type="password"
+                    id="registerPassword"
+                    autocomplete="new-password"
+                    placeholder="비밀번호"
+                    required
+                />
+            </label>
 
-</div>
-</body>
-</html>
+            <label class="auth-field">
+                <span>Password Check</span>
+                <input
+                    type="password"
+                    id="registerPasswordCheck"
+                    autocomplete="new-password"
+                    placeholder="비밀번호 확인"
+                    required
+                />
+            </label>
+
+            <button class="primary-btn auth-submit" type="submit">
+                회원가입
+            </button>
+        </form>
+
+        <div class="auth-links">
+            <button type="button" data-page="login">
+                이미 계정이 있어요
+            </button>
+        </div>
+
+        <p class="auth-message" id="authMessage"></p>
+    </div>
+</section>
