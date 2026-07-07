@@ -1,6 +1,6 @@
 /* =========================================================
-   1. DOM 선택
-   - 앱 전체에서 공통으로 사용하는 요소를 가져온다.
+    1. DOM 선택
+    - 앱 전체에서 공통으로 사용하는 요소를 가져온다.
 ========================================================= */
 
 const appLayout = document.querySelector(".app-layout");
@@ -10,22 +10,30 @@ const menuItems = document.querySelectorAll(".menu-item");
 
 
 /* =========================================================
-   2. 라우트 설정
-   - 해시 값과 실제 불러올 HTML 파일을 매핑한다.
-   - 예: #archive → ./pages/archive.html
+    2. 라우트 설정
+    - 해시 값과 실제 불러올 HTML 파일을 매핑한다.
+    - 예: #archive → ./pages/archive.html
 ========================================================= */
 
 const routes = {
+    home: "./pages/home.html",
     archive: "./pages/archive.html",
     editor: "./pages/editor.html",
     classroom: "./pages/classroom.html",
-    statistics: "./pages/statistics.html"
+    statistics: "./pages/statistics.html",
+    login: "./pages/login.html",
+    register: "./pages/register.html",
+    mypage: "./pages/mypage.html"
 };
 
+const defaultPage = "home";
+const pageName = location.hash.replace("#", "") || "home";
+
+const protectedPages = ["archive", "editor", "classroom", "statistics", "mypage"];
 
 /* =========================================================
-   3. 사이드바 토글
-   - 북마크 버튼을 누르면 사이드바를 열고 닫는다.
+    3. 사이드바 토글
+    - 북마크 버튼을 누르면 사이드바를 열고 닫는다.
 ========================================================= */
 
 if (sidebarBookmark && appLayout) {
@@ -49,13 +57,14 @@ if (sidebarBookmark && appLayout) {
 
 
 /* =========================================================
-   4. 페이지 렌더링
-   - routes에 등록된 HTML 파일을 fetch로 불러온다.
-   - 불러온 HTML을 main#pageContent 안에 삽입한다.
+    4. 페이지 렌더링
+    - routes에 등록된 HTML 파일을 fetch로 불러온다.
+    - 불러온 HTML을 main#pageContent 안에 삽입한다.
 ========================================================= */
 
 async function renderPage(pageName) {
-    const targetPage = routes[pageName] ? pageName : "archive";
+    const guardedPage = guardPage(pageName);
+    const targetPage = routes[guardedPage] ? guardedPage : "home";
 
     try {
         const response = await fetch(routes[targetPage]);
@@ -66,8 +75,10 @@ async function renderPage(pageName) {
 
         const html = await response.text();
         pageContent.innerHTML = html;
+        document.body.dataset.page = targetPage;
     } catch (error) {
         pageContent.innerHTML = renderFallbackPage(targetPage);
+        document.body.dataset.page = targetPage;
         console.warn(error);
     }
 
@@ -78,9 +89,9 @@ async function renderPage(pageName) {
 
 
 /* =========================================================
-   5. 임시 페이지 렌더링
-   - 아직 editor/classroom/statistics.html이 없을 때
-     안내 화면을 보여준다.
+    5. 임시 페이지 렌더링
+    - 아직 editor/classroom/statistics.html이 없을 때
+        안내 화면을 보여준다.
 ========================================================= */
 
 function renderFallbackPage(pageName) {
@@ -107,8 +118,8 @@ function renderFallbackPage(pageName) {
 
 
 /* =========================================================
-   6. 메뉴 활성화 표시
-   - 현재 페이지와 같은 data-page를 가진 메뉴에 active를 준다.
+    6. 메뉴 활성화 표시
+    - 현재 페이지와 같은 data-page를 가진 메뉴에 active를 준다.
 ========================================================= */
 
 function setActiveMenu(pageName) {
@@ -119,8 +130,8 @@ function setActiveMenu(pageName) {
 
 
 /* =========================================================
-   7. 해시 주소 업데이트
-   - 메뉴 이동 시 URL을 #archive, #editor 같은 형태로 바꾼다.
+    7. 해시 주소 업데이트
+    - 메뉴 이동 시 URL을 #archive, #editor 같은 형태로 바꾼다.
 ========================================================= */
 
 function updateHash(pageName) {
@@ -140,8 +151,18 @@ function initPage(pageName) {
     if (pageName === "archive" && typeof window.initArchivePage === "function") {
         window.initArchivePage();
     }
-}
 
+    if (
+        (pageName === "login" || pageName === "register") &&
+        typeof window.initAuthPage === "function"
+    ) {
+        window.initAuthPage(pageName);
+    }
+
+    if (pageName === "mypage" && typeof window.initMyPage === "function") {
+        window.initMyPage();
+    }
+}
 
 /* =========================================================
     9. 페이지 이동 이벤트
@@ -150,22 +171,23 @@ function initPage(pageName) {
     - 브라우저 해시 변경 처리
 ========================================================= */
 
-pageContent.addEventListener("click", (event) => {
+document.addEventListener("click", (event) => {
     const pageButton = event.target.closest("[data-page]");
 
     if (!pageButton) return;
 
-    renderPage(pageButton.dataset.page);
+    event.preventDefault();
+    location.hash = pageButton.dataset.page;
 });
 
 menuItems.forEach((item) => {
     item.addEventListener("click", () => {
-        renderPage(item.dataset.page);
+        location.hash = item.dataset.page;
     });
 });
 
 window.addEventListener("hashchange", () => {
-    const pageName = window.location.hash.replace("#", "") || "archive";
+    const pageName = window.location.hash.replace("#", "") || "home";
     renderPage(pageName);
 });
 
@@ -467,14 +489,29 @@ function syncPreferenceUI(preferences) {
         );
     }
 }
+/*==========================================================
+    보호 페이지 처리
+==========================================================*/
+
+function isLoggedIn() {
+    return Boolean(localStorage.getItem("storyArchive.accessToken"));
+}
+
+function guardPage(pageName) {
+    if (protectedPages.includes(pageName) && !isLoggedIn()) {
+        return "login";
+    }
+
+    return pageName;
+}
 
 
 /* =========================================================
-    17. 최초 실행부
+    최초 실행부
     - Preference를 먼저 적용한 뒤 초기 페이지를 렌더링한다.
 ========================================================= */
 
 initPreferences();
 
-const initialPage = window.location.hash.replace("#", "") || "archive";
+const initialPage = window.location.hash.replace("#", "") || "home";
 renderPage(initialPage);

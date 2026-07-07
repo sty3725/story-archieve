@@ -1,35 +1,35 @@
-<!DOCTYPE html>
-<html>
+<section class="page-section auth-page" id="authPage">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Login</h1>
+            <p>Story Archive에 다시 들어가기</p>
+        </div>
 
-<head>
-    <link rel="stylesheet" href="./frontend/css/common.css"  />
-</head>
+        <form class="auth-form" id="loginForm">
+            <label class="auth-field">
+                <span>Email</span>
+                <input type="email" id="loginEmail" autocomplete="email" required />
+            </label>
 
-<body class="public-page login">
-<div class="app-layout">
-    <header class="header">
-        <div class="logo"></div>
-        <div class="my-page"></div>
-    </header>
-    
-    <aside class="sidebar">
-        <button class="sidebar-bookmark" type="button" aria-label="메뉴 열기">
-            <span></span>
-        </button>
-        
-        <div class="logo"></div>
-        <menu>
-            <a href="./dashboard.html"><div>Archieve</div></a>
-            <a href="./classroom.html"><div>Class room</div></a>
-            <div>setting</div>
-        </menu>
-        <div class="shortcut"></div> 
-    </aside>
+            <label class="auth-field">
+                <span>Password</span>
+                <input type="password" id="loginPassword" autocomplete="current-password" required />
+            </label>
 
-<main class="page-content">
-    
-</main>
+            <button class="primary-btn auth-submit" type="submit">
+                로그인
+            </button>
+        </form>
 
-</div>
-</body>
-</html>
+        <div class="auth-links">
+            <button type="button" data-page="register">
+                계정 만들기
+            </button>
+            <button type="button" id="forgotPasswordBtn">
+                비밀번호를 잊었나요?
+            </button>
+        </div>
+
+        <p class="auth-message" id="authMessage"></p>
+    </div>
+</section>
