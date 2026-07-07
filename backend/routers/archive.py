@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 
-from database import get_db
-from models.archive import Work, Folder, Document
-from schemas.archive import WorkResponse
+from backend.database import get_db
+from backend.models.archive import Work, Folder
+from backend.schemas.archive import WorkResponse
 
 router = APIRouter(
     prefix="/api/archive",

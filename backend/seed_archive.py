@@ -1,5 +1,5 @@
-from database import SessionLocal
-from models.archive import Work, Folder, Document
+from backend.database import SessionLocal
+from backend.models.archive import Work, Folder, Document
 
 
 def seed_archive_data():
