@@ -162,6 +162,10 @@ function initPage(pageName) {
     if (pageName === "mypage" && typeof window.initMyPage === "function") {
         window.initMyPage();
     }
+
+    if (pageName === "editor" && window.initEditorPage) {
+        window.initEditorPage();
+    }
 }
 
 /* =========================================================

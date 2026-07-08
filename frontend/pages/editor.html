@@ -1,0 +1,97 @@
+<section class="editor-page page-section" id="editorPage">
+    <header class="editor-header">
+        <div class="editor-location">
+            <p class="editor-kicker">Editor</p>
+
+            <div class="editor-breadcrumb">
+                <span class="editor-work-title">검은 도시의 기록</span>
+                <span class="breadcrumb-divider">/</span>
+
+                <div class="document-switcher">
+                    <button class="document-switcher-button" type="button" id="documentSwitcherBtn">
+                        <span id="currentDocumentLabel">1화 - 시작</span>
+                        <span class="switcher-arrow">▾</span>
+                    </button>
+
+                    <div class="document-switcher-menu" id="documentSwitcherMenu" hidden>
+                        <div class="switcher-group">
+                            <p>1부</p>
+                            <button type="button" class="switcher-item active">1화 - 시작</button>
+                            <button type="button" class="switcher-item">2화 - 추적</button>
+                        </div>
+
+                        <div class="switcher-group">
+                            <p>설정집</p>
+                            <button type="button" class="switcher-item">도시 설정</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-save-state">
+            <span id="editorSaveState">저장됨</span>
+            <button class="sub-btn" type="button" id="editorSaveBtn">저장</button>
+        </div>
+    </header>
+
+    <main class="editor-main panel">
+        <input
+            class="editor-title-input"
+            id="editorTitleInput"
+            type="text"
+            value="1화 - 시작"
+            aria-label="문서 제목"
+        />
+
+        <div class="editor-guide">
+            <span>Ctrl + L : 라벨 추가</span>
+            <span>Ctrl + M : 선택 라벨 메모 수정</span>
+            <span>Ctrl + S : 저장</span>
+        </div>
+
+        <div class="editor-canvas" id="editorCanvas">
+            <p>
+비가 내리는 도시는 늘 같은 냄새를 품고 있었다.
+오래된 전선, 젖은 콘크리트, 그리고 아무도 말하지 않는 비밀의 냄새.
+            </p>
+
+            <span
+                class="editor-label has-memo"
+                tabindex="0"
+                style="--label-color: #ff4d6d;"
+                data-label-id="label-demo-1"
+                data-label-title="복선"
+                data-label-color="#ff4d6d"
+                data-label-memo="이 장면은 주인공이 도시의 이상함을 처음 감지하는 지점."
+            >
+                <span class="label-flag-icon" aria-hidden="true">⚑</span>
+                <span class="label-memo-bubble">
+                    <strong>복선</strong>
+                    <span>이 장면은 주인공이 도시의 이상함을 처음 감지하는 지점.</span>
+                </span>
+            </span>
+
+            <p>
+유하는 새벽 세 시의 정류장에 서 있었다.
+마지막 버스는 이미 지나갔고, 전광판에는 존재하지 않는 노선 번호가 깜빡이고 있었다.
+            </p>
+
+            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum used since 1966 is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
+            </p>
+        </div>
+    </main>
+
+    <footer class="editor-statusbar">
+        <span id="editorCharCount">0자</span>
+        <span id="editorLabelCount">라벨 0개</span>
+        <span id="editorLastSaved">마지막 저장: -</span>
+    </footer>
+
+    <div class="label-floating-bubble" id="labelFloatingBubble" hidden>
+        <strong id="labelFloatingTitle"></strong>
+        <span id="labelFloatingMemo"></span>
+    </div>
+</section>
