@@ -25,11 +25,9 @@ app.mount("/pages", StaticFiles(directory=FRONTEND_DIR / "pages"), name="pages")
 
 app.include_router(archive.router)
 
-
 @app.get("/")
-def root():
-    return {"message": "writer platform backend"}
-
+def index():
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 @app.get("/api/health")
 def health_check():
