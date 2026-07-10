@@ -1,597 +1,697 @@
+/* =========================================================
+   Story Archive Common CSS
+   ---------------------------------------------------------
+   역할
+   1. 브라우저 기본 스타일 초기화
+   2. Story Archive 공통 앱 레이아웃 관리
+   3. 왼쪽 메인 사이드바 관리
+   4. 페이지 콘텐츠 영역 관리
+   5. 6개 테마 프리셋 관리
+   6. 사용자 글자 크기 배율 관리
+
+   제거된 기능
+   - 사용자의 직접 사이드바 색상 선택
+   - 사용자의 직접 배경색 선택
+
+   유지된 기능
+   - 테마 프리셋 선택
+   - 사용자 글자 크기 선택
+   ========================================================= */
+
+
+/* =========================================================
+   1. 공통 크기 및 레이아웃 변수
+   ========================================================= */
+
 :root {
-    --logo-width: 180px;
-    --logo-height: auto;
-    --sidebar-width: 260px;
-    --bookmark-width: 72px;
+  /* 왼쪽 메인 사이드바의 기본 너비 */
+  --sidebar-width: 250px;
 
-    --page-bg: #f5f5f5;
-    --page-content-bg: azure;
+  /* JS 또는 다른 CSS에서 사용할 수 있는 메뉴 상태값 */
+  --main-nav__item: 0;
 
-    --panel-bg: rgba(255, 255, 255, 0.75);
-    --panel-border: rgba(0, 0, 0, 0.18);
-
-    --text-main: #111;
-    --text-muted: rgba(0, 0, 0, 0.65);
-
-    --sidebar-bg: #000000;
-    --sidebar-text: #ffffff;
-    --sidebar-border: rgba(255, 255, 255, 0.18);
+  --sidebar-handle-width: 36px;
 }
 
+
+/* =========================================================
+   2. 기본 리셋
+   ========================================================= */
+
+/*
+  모든 요소의 width와 height 안에
+  padding과 border가 포함되도록 설정한다.
+*/
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
+
+
+/*
+  브라우저가 body에 기본으로 넣는 여백을 제거한다.
+*/
+body {
+  margin: 0;
+}
+
+
+/*
+  버튼과 입력 요소가 body의 글꼴 설정을 그대로 사용한다.
+*/
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+
+/*
+  모든 버튼에 손가락 모양 커서를 적용한다.
+*/
+button {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   3. Body 공통 설정
+   ========================================================= */
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    background: var(--page-bg);
-    color: var(--text-main);
-}
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 
-body[data-theme="light"] {
-    --sidebar-bg: #000000;
-    --sidebar-text: #ffffff;
-    --sidebar-border: rgba(255, 255, 255, 0.22);
-}
+  /*
+    현재 body에 적용된 테마 변수로
+    배경색과 기본 글자색을 설정한다.
+  */
+  background: var(--app-bg);
+  color: var(--text-main);
 
-body[data-theme="dark"] {
-    --page-bg: #0b111d;
-    --page-content-bg: #101826;
+  /*
+    브라우저 전체 스크롤을 막고,
+    필요한 영역 내부에서 별도로 스크롤하도록 한다.
+  */
+  overflow: hidden;
 
-    --panel-bg: rgba(22, 32, 48, 0.82);
-    --panel-border: rgba(210, 225, 255, 0.18);
+  /*
+    사용자 글자 크기 배율.
+    main.js에서 이 값을 변경할 수 있다.
 
-    --text-main: #eef4ff;
-    --text-muted: rgba(238, 244, 255, 0.62);
-
-    --button-bg: rgba(255, 255, 255, 0.08);
-    --button-bg-hover: rgba(255, 255, 255, 0.14);
-    --button-border: rgba(210, 225, 255, 0.22);
-
-    --sidebar-bg: #050913;
-    --sidebar-text: #eef4ff;
-    --sidebar-border: rgba(210, 225, 255, 0.2);
-}
-
-body[data-theme="custom"] {
-    --page-bg: var(--custom-page-bg);
-    --page-content-bg: var(--custom-page-bg);
-}
-
-body[data-font-size="small"] {
-    font-size: 14px;
-}
-body[data-font-size="medium"] {
-    font-size: 16px;
-}
-body[data-font-size="large"] {
-    font-size: 18px;
+    1    = 100%
+    1.1  = 110%
+    1.2  = 120%
+  */
+  --user-font-scale: 1;
 }
 
 
-body[data-page="home"] .app-layout,
-body[data-page="login"] .app-layout,
-body[data-page="register"] .app-layout {
-    display: none;
-}
+/* =========================================================
+   4. 테마 공통 기본값
+   ---------------------------------------------------------
+   body에 별도의 테마 클래스가 없을 때
+   아이보리 라이트가 기본으로 사용된다.
+   ========================================================= */
 
-button {
-    font: inherit;
-}
+body {
+  /* 앱 전체 바깥 배경 */
+  --app-bg: #f4efe7;
 
-/* ==============================
-    App Layout
-============================== */
+  /* 왼쪽 사이드바 배경 */
+  --sidebar-bg: #fffaf3;
 
-.app-layout {
-    position: relative;
-}
+  /* 중앙 페이지 배경 */
+  --page-bg: #f8f4ed;
 
-.page-content {
-    min-height: 100vh;
-    padding: 30px;
-    box-sizing: border-box;
-    background-color: var(--page-content-bg);
-    color: var(--text-main);
-}
+  /* 카드 및 오른쪽 패널 배경 */
+  --panel-bg: #ffffff;
 
-/* ==============================
-    Logo
-============================== */
+  /* 테두리 */
+  --border-color: rgba(70, 54, 34, 0.14);
 
-.sidebar .logo {
-    width: 100%;
-    height: 82px;
-    padding: 16px;
-    margin: 0;
-    overflow: hidden;
+  /* 텍스트 */
+  --text-main: #27231f;
+  --text-sub: #5f574f;
+  --text-muted: #8a8075;
 
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  /* 아이콘, 점, 강조 요소 */
+  --theme-accent: #3b8eea;
 
-    flex-shrink: 0;
-}
+  /* 메뉴 호버 배경 */
+  --menu-hover-bg: rgba(59, 142, 234, 0.1);
 
-.sidebar .logo img {
-    max-width: 100%;
-    max-height: 54px;
-    object-fit: contain;
-    display: block;
-}
-/* ==============================
-    Sidebar
-============================== */
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: var(--sidebar-width);
-    height: 100vh;
-    box-sizing: border-box;
-
-    z-index: 100;
-    transition: transform 0.28s ease;
-
-    background-color: var(--sidebar-bg);
-    color: var(--sidebar-text);
-
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-color-row {
-    margin-top: 12px;
-}
-
-/* 닫힘 상태: 본체는 화면 밖으로 밀고, 탭만 남김 */
-.sidebar-closed .sidebar {
-    transform: translateX(calc(-1 * var(--sidebar-width)));
-}
-
-/* 열림 상태 */
-.sidebar-open .sidebar {
-    transform: translateX(0);
+  /* 메뉴 호버 글자색 */
+  --menu-hover-text: #27231f;
 }
 
 
-.sidebar-bookmark {
-    position: absolute;
-    top: 100px;
-    right: calc(-1 * var(--bookmark-width));
+/* =========================================================
+   5. 테마 프리셋
+   ---------------------------------------------------------
+   body 클래스 예시:
 
-    width: var(--bookmark-width);
-    height: 42px;
+   <body class="theme-forest">
+   ========================================================= */
 
-    padding: 0;
-    border: none;
-    background: transparent;
-    cursor: pointer;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ---------------------------------------------------------
+   5-1. 모노 다크
+   --------------------------------------------------------- */
 
-    z-index: 99;
+body.theme-mono-dark {
+  --app-bg: #111111;
+  --sidebar-bg: #181818;
+  --page-bg: #131313;
+  --panel-bg: #202020;
+
+  --border-color: rgba(255, 255, 255, 0.12);
+
+  --text-main: #eeeeee;
+  --text-sub: #b8b8b8;
+  --text-muted: #7d7d7d;
+
+  --theme-accent: #d6d6d6;
+
+  --menu-hover-bg: rgba(255, 255, 255, 0.08);
+  --menu-hover-text: #ffffff;
 }
 
-.sidebar-bookmark img {
-    width: 60px;
-    height: auto;
-    left: 0;
+
+/* ---------------------------------------------------------
+   5-2. 아이보리 라이트
+   --------------------------------------------------------- */
+
+body.theme-ivory-light {
+  --app-bg: #f4efe7;
+  --sidebar-bg: #fffaf3;
+  --page-bg: #f8f4ed;
+  --panel-bg: #ffffff;
+
+  --border-color: rgba(70, 54, 34, 0.14);
+
+  --text-main: #27231f;
+  --text-sub: #5f574f;
+  --text-muted: #8a8075;
+
+  --theme-accent: #3b8eea;
+
+  --menu-hover-bg: rgba(59, 142, 234, 0.1);
+  --menu-hover-text: #27231f;
 }
 
-.sidebar-bookmark:hover img {
-    transform: translateX(3px);
+
+/* ---------------------------------------------------------
+   5-3. 포레스트
+   --------------------------------------------------------- */
+
+body.theme-forest {
+  --app-bg: #3f563d;
+  --sidebar-bg: #778873;
+  --page-bg: #50604c;
+  --panel-bg: #657360;
+
+  --border-color: rgba(253, 246, 237, 0.2);
+
+  --text-main: #fdf6ed;
+  --text-sub: rgba(253, 246, 237, 0.78);
+  --text-muted: rgba(253, 246, 237, 0.52);
+
+  --theme-accent: #dccfc0;
+
+  --menu-hover-bg: rgba(220, 207, 192, 0.2);
+  --menu-hover-text: #ffffff;
 }
 
-.sidebar-bookmark img {
-    transition: transform 0.18s ease, filter 0.18s ease;
+
+/* ---------------------------------------------------------
+   5-4. 선셋
+   --------------------------------------------------------- */
+
+body.theme-sunset {
+  --app-bg:
+    linear-gradient(
+      180deg,
+      #2f2578 0%,
+      #443199 42%,
+      #792ca2 72%,
+      #c13383 100%
+    );
+
+  --sidebar-bg:
+    linear-gradient(
+      180deg,
+      #2f2578 0%,
+      #443199 46%,
+      #792ca2 100%
+    );
+
+  --page-bg: rgba(47, 37, 120, 0.62);
+  --panel-bg: rgba(68, 49, 153, 0.72);
+
+  --border-color: rgba(255, 246, 240, 0.2);
+
+  --text-main: #fff6f0;
+  --text-sub: rgba(255, 246, 240, 0.78);
+  --text-muted: rgba(255, 246, 240, 0.52);
+
+  --theme-accent: #e05454;
+
+  --menu-hover-bg: rgba(255, 246, 240, 0.12);
+  --menu-hover-text: #ffffff;
+}
+
+
+/* ---------------------------------------------------------
+   5-5. 오션
+   --------------------------------------------------------- */
+
+body.theme-ocean {
+  --app-bg:
+    linear-gradient(
+      180deg,
+      #b4e1eb 0%,
+      #95bdd7 54%,
+      #78a4cb 100%
+    );
+
+  --sidebar-bg: rgba(239, 250, 252, 0.68);
+  --page-bg: rgba(229, 246, 250, 0.56);
+  --panel-bg: rgba(255, 255, 255, 0.5);
+
+  --border-color: rgba(255, 255, 255, 0.48);
+
+  --text-main: #173241;
+  --text-sub: #34586a;
+  --text-muted: #668697;
+
+  --theme-accent: #4f86b0;
+
+  --menu-hover-bg: rgba(255, 255, 255, 0.28);
+  --menu-hover-text: #173241;
+}
+
+
+/* ---------------------------------------------------------
+   5-6. 라벤더
+   --------------------------------------------------------- */
+
+body.theme-lavender {
+  --app-bg:
+    linear-gradient(
+      180deg,
+      #fbefef 0%,
+      #ffe2e2 50%,
+      #e2d5e8 100%
+    );
+
+  --sidebar-bg:
+    linear-gradient(
+      180deg,
+      #ffe2e2 0%,
+      #f5cbcb 62%,
+      #c5b3d3 100%
+    );
+
+  --page-bg: rgba(255, 242, 242, 0.72);
+  --panel-bg: rgba(255, 248, 248, 0.82);
+
+  --border-color: rgba(169, 138, 188, 0.24);
+
+  --text-main: #3d2f43;
+  --text-sub: #6f5a72;
+  --text-muted: #9d8294;
+
+  --theme-accent: #a98abc;
+
+  --menu-hover-bg: rgba(169, 138, 188, 0.18);
+  --menu-hover-text: #3d2f43;
+}
+
+
+/* =========================================================
+   6. 앱 전체 레이아웃
+   ========================================================= */
+
+/*
+  전체 화면을 감싸는 최상위 앱 컨테이너.
+
+  position: relative는 내부 absolute 요소들의
+  위치 기준이 된다.
+*/
+.app-shell {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  padding: 8px;
+
+  /*
+    body의 테마 배경이 보이도록
+    별도의 불투명 배경은 주지 않는다.
+  */
+  background: transparent;
+}
+
+
+/* =========================================================
+   7. 왼쪽 메인 사이드바
+   ========================================================= */
+
+.main-sidebar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+
+  width: var(--sidebar-width);
+  height: calc(100vh - 16px);
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--sidebar-bg);
+  color: var(--text-main);
+  overflow: visible;
+  transform: translateX(0);
+  transition: transform 240ms ease;
+  will-change: transform;
+
+
+
+}
+
+
+/*
+  사이드바 내부의 각 구역과
+  최근 문서 ul의 기본 정렬 방식.
+*/
+.sidebar-component,
+.sidebar-component > ul {
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+  row-gap: 10px;
+
+  color: var(--text-main);
+}
+
+
+/* =========================================================
+   8. 사이드바 로고
+   ========================================================= */
+
+.sidebar-brand {
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+}
+
+
+/* 로고 앞쪽 심볼 */
+.sidebar-brand__mark {
+  color: var(--theme-accent);
+}
+
+
+/* Story Archive 텍스트 */
+.sidebar-brand__text {
+  color: var(--text-main);
+}
+
+
+/* =========================================================
+   9. 사용자 프로필
+   ========================================================= */
+
+.user-profile {
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+}
+
+
+/* 사용자의 이름 또는 닉네임 */
+#user-nickname {
+  color: var(--text-sub);
+}
+
+
+/* =========================================================
+   10. 메인 메뉴 및 최근 문서 영역
+   ========================================================= */
+
+.navigation,
+.recent {
+  color: var(--text-main);
+}
+
+
+/* Main Menu, 최근 문서 같은 구역 제목 */
+.navigation > label,
+.recent > label {
+  color: var(--text-muted);
+}
+
+
+/*
+  ul 브라우저 기본 여백을 제거한다.
+*/
+.recent-doc-list {
+  margin: 0;
+  padding: 0;
+
+  color: var(--text-sub);
+
+  list-style: none;
+}
+
+
+/* 최근 문서 앞에 표시되는 작은 점 */
+.recent-doc__dot {
+  width: 6px;
+  height: 6px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+  background: var(--theme-accent);
+}
+
+
+/* =========================================================
+   11. 사이드바 버튼 기본 형태
+   ========================================================= */
+
+.main-nav__item,
+.shortcut-nav__item,
+.sidebar-collapse-toggle {
+  background: transparent;
+  color: var(--text-sub);
+
+  border: 0;
+
+  /*
+    브라우저 기본 버튼 스타일을 제거한다.
+  */
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.navigation > .main-nav__item {
+  text-align: left;
+  margin-left: 20px;
+}
+
+/* 메인 메뉴 아이콘 */
+.main-nav__icon {
+  color: var(--text-muted);
+}
+
+
+/* =========================================================
+   12. 메뉴 호버 효과
+   ---------------------------------------------------------
+   마우스를 올린 경우에만 배경색과 글자색이 바뀐다.
+
+   클릭 상태 또는 활성 메뉴 상태는 아직 포함하지 않는다.
+   ========================================================= */
+
+.main-nav__item,
+.shortcut-nav__item {
+  /*
+    배경색과 글자색 변화가 너무 갑작스럽지 않도록 한다.
+  */
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+
+.main-nav__item:hover,
+.shortcut-nav__item:hover {
+  background: var(--menu-hover-bg);
+  color: var(--menu-hover-text);
+}
+
+
+/*
+  메뉴에 마우스를 올렸을 때
+  내부 아이콘도 같은 색을 사용한다.
+*/
+.main-nav__item:hover .main-nav__icon {
+  color: var(--menu-hover-text);
+}
+
+
+/* =========================================================
+    13. 사이드바 하단 영역
+   ========================================================= */
+
+.sidebar-bottom {
+  border-top: 1px solid var(--border-color);
 }
 
 .sidebar-bottom {
-    margin-top: auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    flex-shrink: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-
-/* ==============================
-    Sidebar Menu
-============================== */
-
-.menu_label {
-    margin: 20px 16px 8px;
-    padding-top: 14px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.sidebar-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    padding: 0 16px;
-    margin: 10px 0 18px;
-}
-
-.menu-item,
-.preference-btn {
-    width: 100%;
-    min-height: 42px;
-    padding: 11px 14px;
-
-    border: 1px solid var(--sidebar-border);
-    background: rgba(255, 255, 255, 0.03);
-    color: var(--sidebar-text);
-
-    text-align: left;
-    cursor: pointer;
-
-    border-radius: 10px;
-}
-
-.menu-item.active,
-.menu-item:hover,
-.preference-btn:hover {
-    background: rgba(255, 255, 255, 0.14);
-}
-
-
-.sidebar-preset-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-.sidebar-color-preset {
-    padding: 8px 10px;
-
-    border: 1px solid var(--panel-border);
-    background: transparent;
-    color: var(--text-main);
-
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    cursor: pointer;
-}
-
-.sidebar-color-preset span {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-
-    flex-shrink: 0;
-
-    border: 1px solid rgba(255, 255, 255, 0.35);
-}
-
-.sidebar-color-preset.is-active {
-    background: var(--text-main);
-    color: var(--page-content-bg);
-}
-
-.sidebar-extra-options {
-    margin-top: 10px;
-}
-
-/* ==============================
-    Common Page
-============================== */
-
-.page-section {
-    width: min(100%, 1520px);
-    margin: 0 auto;
-}
-
-.page-header {
-    min-height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 16px;
-}
-
-.page-header h1 {
-    margin: 0;
-    font-size: 40px;
-}
-
-.page-description {
-    margin: 10px 0 0;
-    color: var(--text-muted);
-}
-
-.placeholder-page {
-    min-height: calc(100vh - 60px);
-}
-
-/* ==============================
-    Common Panel
-============================== */
-
-.panel {
-    padding: 20px;
-    border: 1px solid var(--panel-border);
-    background: var(--panel-bg);
-    box-sizing: border-box;
-}
-
-.panel-header {
-    min-height: 40px;
-    margin-bottom: 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.panel-header h2 {
-    margin: 0;
-}
-
-/* ==============================
-    Common Buttons
-============================== */
-
-.primary-btn,
-.sub-btn,
-.danger-btn,
-.mode-toggle-btn {
-    padding: 10px 14px;
-    cursor: pointer;
-}
-
-.primary-btn {
-    border: 1px solid black;
-    background: black;
-    color: white;
-}
-
-.sub-btn {
-    border: 1px solid black;
-    background: white;
-    color: black;
-}
-
-.danger-btn {
-    border: 1px solid #a30000;
-    background: white;
-    color: #a30000;
-}
-
-.mode-toggle-btn {
-    border: 1px solid black;
-    background: white;
-    color: black;
-}
-
-
-/* =======================
-    유저 profile
-========================*/
-
-
-
-.profile-button {
-    width: 100%;
-    padding: 10px 12px;
-
-    border: 1px solid var(--sidebar-border);
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--sidebar-text);
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    cursor: pointer;
-    font: inherit;
-    text-align: left;
-}
-
-.profile-button:hover {
-    background: rgba(255, 255, 255, 0.12);
-}
-
-.profile-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255, 255, 255, 0.18);
-    color: var(--sidebar-text);
-
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.profile-name {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    font-size: 14px;
-}
-
-/* ==============================
-    Preference 패널 CSS
-===============================*/
-
-.preference-panel {
-    position: fixed;
-    left: calc(var(--sidebar-width) + 16px);
-    bottom: 24px;
-
-    width: 320px;
-    padding: 18px;
-
-    z-index: 200;
-
-    border: 1px solid var(--panel-border);
-    background: var(--panel-bg);
-    color: var(--text-main);
-
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
-}
-
-
-.sidebar-closed .preference-panel {
-    left: calc(var(--bookmark-width) + 16px);
-}
-
-.sidebar-open .preference-panel {
-    left: calc(var(--sidebar-width) + 16px);
-}
-
-.preference-panel[hidden] {
-    display: none;
-}
-
-.preference-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.preference-header h2 {
-    margin: 0;
-}
-
-.preference-group {
-    padding: 12px 0;
-    border-top: 1px solid var(--panel-border);
-}
-
-.preference-group h3 {
-    margin: 0 0 10px;
-    font-size: 14px;
-}
-
-.preference-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.preference-option {
-    padding: 8px 10px;
-    border: 1px solid var(--panel-border);
-    background: transparent;
-    color: var(--text-main);
-    cursor: pointer;
-}
-
-.preference-option.is-active {
-    background: var(--text-main);
-    color: var(--page-content-bg);
-}
-
-.color-picker-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.color-picker-row input {
-    width: 72px;
-    height: 36px;
-    padding: 0;
-    border: 1px solid var(--panel-border);
-    background: transparent;
-}
-
-body:not([data-theme="custom"]) #customBackgroundGroup {
-    opacity: 0.45;
-    pointer-events: none;
+  margin-top: auto;
 }
 
 
 
-/* ==============================
-   Temporary Layouts
-   나중에 editor.css / statistics.css로 분리 예정
-============================== */
-
-.editor-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr 260px;
-    gap: 20px;
-    min-height: 620px;
+/* body에 sidebar-collapsed가 붙으면 접힘 */
+body.sidebar-collapsed .main-sidebar {
+  transform: translateX(
+    calc(-1 * var(--sidebar-width) + 18px)
+  );
 }
 
-.editor-title {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    font-size: 20px;
+
+/* 접기 버튼을 감싸는 영역 */
+.fold {
+  position: absolute;
+
+  top: 50%;
+  right: -17px;
+
+  width: 34px;
+  height: 68px;
+
+  padding: 0;
+  margin: 0;
+
+  transform: translateY(-50%);
+
+  border: 0;
+  background: transparent;
+
+  z-index: 20;
 }
 
-.editor-textarea {
-    width: 100%;
-    min-height: 500px;
-    padding: 16px;
-    box-sizing: border-box;
-    resize: vertical;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    font-size: 16px;
-    line-height: 1.7;
+
+/* 실제 손잡이 버튼 */
+.sidebar-collapse-toggle {
+  width: 34px;
+  height: 68px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+  margin: 0;
+
+  background: var(--sidebar-bg);
+  color: var(--text-main);
+
+  border: 1px solid var(--border-color);
+  border-left: 0;
+  border-radius: 0 10px 10px 0;
+
+  font-size: 15px;
+  line-height: 1;
 }
 
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+
+/* =========================================================
+    14. 중앙 페이지 콘텐츠
+   ========================================================= */
+
+.page-content {
+  position: absolute;
+
+  left: 25vw;
+
+  width: 50vw;
+  height: calc(100vh - 40px);
+
+  margin-block: 10px;
+  padding: 20px;
+
+  background: var(--page-bg);
+  color: var(--text-main);
+
+  /*
+    body에서 전체 스크롤을 막았으므로
+    콘텐츠가 길어질 경우 이 영역 안에서 스크롤한다.
+  */
+  overflow-y: auto;
 }
 
-.stat-card strong {
-    display: block;
-    margin-top: 16px;
-    font-size: 36px;
+
+/* =========================================================
+    15. 기본 페이지 안내 화면
+   ========================================================= */
+
+.empty-page-state {
+  color: var(--text-main);
 }
 
-/* ==============================
-   Responsive
-============================== */
+
+.empty-page-state p {
+  margin: 0;
+  color: var(--text-sub);
+}
+
+
+/* =========================================================
+    16. 오른쪽 보조 사이드바
+   ========================================================= */
+
+#sub-sidebar {
+  background: var(--panel-bg);
+  color: var(--text-main);
+
+  border-left: 1px solid var(--border-color);
+}
+
+
+/* =========================================================
+    17. 페이지 공통 카드
+    ---------------------------------------------------------
+    fetch로 불러오는 각 페이지에서도 재사용할 수 있다.
+   ========================================================= */
+
+.content-card {
+  background: var(--panel-bg);
+  color: var(--text-main);
+
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+
+
+/* =========================================================
+    18. 반응형 레이아웃
+    ---------------------------------------------------------
+    이후 태블릿과 모바일용 규칙을 추가할 위치.
+   ========================================================= */
 
 @media (max-width: 900px) {
-    .editor-layout,
-    .card-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .page-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
+  /*
+    아직 구체적인 모바일 구조를 정하지 않았다면
+    이 영역은 비워 두어도 된다.
+  */
 }

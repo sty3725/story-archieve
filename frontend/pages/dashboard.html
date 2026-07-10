@@ -1,0 +1,181 @@
+<section class="page-view dashboard-page" aria-labelledby="dashboard-title">
+    <header class="page-header">
+        <div class="page-header__text">
+        <p class="page-eyebrow">Dashboard</p>
+        <h1 id="dashboard-title">좋은 오후예요, Tesius</h1>
+        <p class="page-description">
+            최근 집필 현황과 작업 중인 작품을 한눈에 확인하세요.
+        </p>
+        </div>
+
+        <div class="page-header__actions">
+        <button class="button button--secondary" type="button" data-page="archive">
+            전체 작품 보기
+        </button>
+        <button class="button button--primary" type="button" data-page="new-document">
+            새 문서
+        </button>
+        </div>
+    </header>
+
+    <section class="dashboard-summary" aria-label="집필 요약">
+        <article class="summary-card">
+        <span class="summary-card__label">전체 작품</span>
+        <strong class="summary-card__value">3</strong>
+        <span class="summary-card__caption">진행 중인 작품</span>
+        </article>
+
+        <article class="summary-card">
+        <span class="summary-card__label">전체 문서</span>
+        <strong class="summary-card__value">18</strong>
+        <span class="summary-card__caption">아카이브 포함</span>
+        </article>
+
+        <article class="summary-card">
+        <span class="summary-card__label">이번 주 작성</span>
+        <strong class="summary-card__value">8,420</strong>
+        <span class="summary-card__caption">글자</span>
+        </article>
+
+        <article class="summary-card">
+        <span class="summary-card__label">최근 저장</span>
+        <strong class="summary-card__value summary-card__value--small">방금 전</strong>
+        <span class="summary-card__caption">자동 저장 완료</span>
+        </article>
+    </section>
+
+    <div class="dashboard-grid">
+        <section class="content-section content-card dashboard-recent" aria-labelledby="recent-work-title">
+        <div class="section-heading">
+            <div>
+            <p class="section-kicker">Continue writing</p>
+            <h2 id="recent-work-title">최근 작업</h2>
+            </div>
+
+            <button class="text-button" type="button" data-page="archive">
+            모두 보기
+            </button>
+        </div>
+
+        <div class="recent-work-list">
+            <article class="recent-work-item">
+            <div class="work-thumbnail" aria-hidden="true">
+                <span>01</span>
+            </div>
+
+            <div class="recent-work-item__body">
+                <div class="recent-work-item__meta">
+                <span>장편소설</span>
+                <span>오늘 수정</span>
+                </div>
+
+                <h3>검은 도시의 기록</h3>
+                <p>3. 균열의 시작</p>
+
+                <div class="work-progress" aria-label="작품 진행률 68%">
+                <div class="work-progress__bar">
+                    <span style="width: 68%"></span>
+                </div>
+                <span class="work-progress__value">68%</span>
+                </div>
+            </div>
+
+            <button class="icon-button" type="button" data-page="editor" aria-label="검은 도시의 기록 열기">
+                →
+            </button>
+            </article>
+
+            <article class="recent-work-item">
+            <div class="work-thumbnail" aria-hidden="true">
+                <span>02</span>
+            </div>
+
+            <div class="recent-work-item__body">
+                <div class="recent-work-item__meta">
+                <span>단편소설</span>
+                <span>어제 수정</span>
+                </div>
+
+                <h3>마녀의 계절</h3>
+                <p>2. 밤이 긴 새벽</p>
+
+                <div class="work-progress" aria-label="작품 진행률 42%">
+                <div class="work-progress__bar">
+                    <span style="width: 42%"></span>
+                </div>
+                <span class="work-progress__value">42%</span>
+                </div>
+            </div>
+
+            <button class="icon-button" type="button" data-page="editor" aria-label="마녀의 계절 열기">
+                →
+            </button>
+            </article>
+        </div>
+        </section>
+
+        <aside class="content-section content-card dashboard-activity" aria-labelledby="activity-title">
+        <div class="section-heading">
+            <div>
+            <p class="section-kicker">Activity</p>
+            <h2 id="activity-title">최근 활동</h2>
+            </div>
+        </div>
+
+        <ol class="activity-list">
+            <li class="activity-item">
+            <span class="activity-item__dot" aria-hidden="true"></span>
+            <div>
+                <strong>3. 균열의 시작</strong>
+                <p>문서를 수정했습니다.</p>
+                <time datetime="2026-07-10T16:20">20분 전</time>
+            </div>
+            </li>
+
+            <li class="activity-item">
+            <span class="activity-item__dot" aria-hidden="true"></span>
+            <div>
+                <strong>마녀의 계절</strong>
+                <p>새 문서를 추가했습니다.</p>
+                <time datetime="2026-07-09T21:10">어제</time>
+            </div>
+            </li>
+
+            <li class="activity-item">
+            <span class="activity-item__dot" aria-hidden="true"></span>
+            <div>
+                <strong>단편 모음</strong>
+                <p>작품 정보를 변경했습니다.</p>
+                <time datetime="2026-07-08T18:40">2일 전</time>
+            </div>
+            </li>
+        </ol>
+        </aside>
+
+        <section class="content-section content-card dashboard-goal" aria-labelledby="goal-title">
+        <div class="section-heading">
+            <div>
+            <p class="section-kicker">Weekly goal</p>
+            <h2 id="goal-title">이번 주 집필 목표</h2>
+            </div>
+
+            <strong class="goal-rate">64%</strong>
+        </div>
+
+        <div class="goal-progress" aria-label="이번 주 집필 목표 달성률 64%">
+            <span style="width: 64%"></span>
+        </div>
+
+        <div class="goal-stats">
+            <div>
+            <span>현재</span>
+            <strong>8,420자</strong>
+            </div>
+            <div>
+            <span>목표</span>
+            <strong>13,000자</strong>
+            </div>
+        </div>
+        </section>
+    </div>
+</section>

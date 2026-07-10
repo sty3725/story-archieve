@@ -1,161 +1,133 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ko">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Story Archive</title>
+
+    <!-- 공통 UI / 테마 / 사이드바 스타일 -->
     <link rel="stylesheet" href="./css/common.css" />
-    <link rel="stylesheet" href="./css/archive.css" />
-    <link rel="stylesheet" href="./css/editor.css" />
-    <link rel="stylesheet" href="./css/auth.css" />
 </head>
+<body class="">
+    <!--
+        app-shell
+        - index.html은 전체 앱의 고정 프레임 역할만 한다.
+        - 실제 페이지 내용은 main.js가 #page-view 안으로 불러온다.
+    -->
+    <div class="app-shell ">
+        <aside class="main-sidebar ">
 
-<body>
-<div class="app-layout sidebar-closed">
-    
-    <aside class="sidebar ">
-        <div class="logo"><img src="./media/logo.png" /></div>
-        <button class="sidebar-bookmark" id="sidebarBookmark" type="button" aria-label="사이드바 열기">
-            <img src="./media/bookmark.png" alt="" />
-        </button>
-        <div class="menu_label">Menu</div>
-        <menu class="sidebar-menu">
-            <button type="button" class="menu-item active" data-page="archive">Archive</button>
-            <button type="button" class="menu-item" data-page="classroom">Class room</button>
-            <button type="button" class="menu-item" data-page="statistics">Statistics</button>
-        </menu>
-        <div class="menu_label">shortcut</div>
-        <div class="shortcut">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div> 
-        <div class="sidebar-bottom">
-            <button class="profile-button" id="profileButton" type="button" data-page="mypage">
-                <span class="profile-avatar">U</span>
-                <span class="profile-name" id="profileName">User</span>
-            </button>
-
-            <button class="sidebar-menu-btn" id="preferenceToggle" type="button">
-                Preference
-            </button>
-        </div>
-    </aside>
-
-    <div class="preference-panel" id="preferencePanel" hidden>
-        <div class="preference-header">
-            <h2>Preference</h2>
-            <button type="button" id="preferenceCloseBtn">닫기</button>
-        </div>
-
-        <section class="preference-group">
-            <h3>사이드바 색상</h3>
-
-            <div class="sidebar-preset-grid">
-                <button type="button" class="sidebar-color-preset" data-sidebar-preset="midnight">
-                    <span style="background:#050913;"></span>
-                    Midnight
-                </button>
-
-                <button type="button" class="sidebar-color-preset" data-sidebar-preset="violet">
-                    <span style="background:#34135f;"></span>
-                    Violet
-                </button>
-
-                <button type="button" class="sidebar-color-preset" data-sidebar-preset="deepBlue">
-                    <span style="background:#073b72;"></span>
-                    Deep Blue
-                </button>
-
-                <button type="button" class="sidebar-color-preset" data-sidebar-preset="emerald">
-                    <span style="background:#064e3b;"></span>
-                    Emerald
-                </button>
-
-                <button type="button" class="sidebar-color-preset" data-sidebar-preset="wine">
-                    <span style="background:#5f1238;"></span>
-                    Wine
-                </button>
-
-                <button type="button" class="sidebar-color-preset" data-sidebar-preset="slate">
-                    <span style="background:#1f2937;"></span>
-                    Slate
-                </button>
-            </div>
-
-            <div class="preference-options sidebar-extra-options">
-                <button type="button" class="preference-option" id="sidebarDefaultBtn">
-                    기본
-                </button>
-
-                <button type="button" class="preference-option" id="sidebarRandomBtn">
-                    랜덤
-                </button>
+            <div class="sidebar-component sidebar-brand">
+                <div class="sidebar-brand__mark" aria-hidden="true">✦</div>
+                <div class="sidebar-brand__text">Story Archive</div>
             </div>
             
-                
-                
-            <h3>테마</h3>
-
-            <div class="preference-options">
-                <button type="button" class="preference-option" data-theme-option="light">
-                    Light
-                </button>
-                <button type="button" class="preference-option" data-theme-option="dark">
-                    Dark
-                </button>
-                <button type="button" class="preference-option" data-theme-option="custom">
-                    Custom
-                </button>
+            <div class="sidebar-component user-profile">
+                <div id="user-img"></div>
+                <div id="user-nickname">tesius</div>
             </div>
 
 
-        </section>
+            <div class="sidebar-component navigation">
+                <label >Main Menu</label>
 
-        <section class="preference-group" id="customBackgroundGroup">
-            <h3>사용자 배경색</h3>
-
-            <label class="color-picker-row sidebar-color-row" id="customSidebarGroup">
-                <span>Sidebar</span>
-                <input type="color" id="customSidebarInput" value="#050913" />
-            </label>
-
-            <label class="color-picker-row">
-                <span>Background</span>
-                <input type="color" id="customBackgroundInput" value="#f5f5f5" />
-            </label>
-        </section>
-
-        <section class="preference-group">
-            <h3>글자 크기</h3>
-
-            <div class="preference-options">
-                <button type="button" class="preference-option" data-font-size-option="small">
-                    작게
+                <button class="main-nav__item" type="button" data-page="dashboard">
+                <span class="main-nav__icon" aria-hidden="true">⌂</span>
+                <span>Dashboard</span>
                 </button>
-                <button type="button" class="preference-option" data-font-size-option="medium">
-                    보통
+
+                <button class="main-nav__item is-active" type="button" data-page="archive">
+                <span class="main-nav__icon" aria-hidden="true">▣</span>
+                <span>Archive</span>
                 </button>
-                <button type="button" class="preference-option" data-font-size-option="large">
-                    크게
+
+                <button class="main-nav__item" type="button" data-page="classroom">
+                <span class="main-nav__icon" aria-hidden="true">▱</span>
+                <span>Class</span>
+                </button>
+
+                <button class="main-nav__item" type="button" data-page="classroom">
+                <span class="main-nav__icon" aria-hidden="true">⚙</span>
+                <span>Setting</span>
+                </button>
+            
+            </div>
+
+
+            <div class="sidebar-component recent">
+                <label>◷ 최근 문서</label>             
+
+                <ul class="recent-doc-list">
+                    <li>
+                        <button type="button" class="main-nav__item is-active" data-page="editor">
+                        <span class="recent-doc__dot" aria-hidden="true"></span>
+                        <span>3. 균열의 시작</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="main-nav__item" data-page="editor">
+                        <span class="recent-doc__dot" aria-hidden="true"></span>
+                        <span>2. 밤이 긴 새벽</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="main-nav__item" data-page="editor">
+                        <span class="recent-doc__dot" aria-hidden="true"></span>
+                        <span>1. 프롤로그</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="main-nav__item" data-page="editor">
+                        <span class="recent-doc__dot" aria-hidden="true"></span>
+                        <span>4. 어둠 속의 선택</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="main-nav__item" data-page="editor">
+                        <span class="recent-doc__dot" aria-hidden="true"></span>
+                        <span>5. 새벽의 빛</span>
+                        </button>
+                    </li>
+                    </ul>
+            </div>
+
+
+            <div class="sidebar-component sidebar-bottom">
+                <button class="shortcut-nav__item" type="button" data-page="trash">
+                    <span aria-hidden="true">⌫</span>
+                    <span>휴지통</span>
+                </button>   
+            </div>
+
+            <div class="sidebar-component fold">
+                <button
+                type="button"
+                class="sidebar-collapse-toggle"
+                id="sidebarCollapseToggle"
+                aria-label="사이드바 접기"
+                aria-expanded="true">❮
                 </button>
             </div>
-        </section>
 
-        <button type="button" class="sub-btn" id="resetPreferenceBtn">
-            설정 초기화
-        </button>
+        </aside>
+
+        <!-- 메인 영역 -->
+        <main class="page-content" id="page-content" tabindex="-1">
+            <!--
+                main.js가 ./pages/archive.html 등을 fetch해서 이 안에 삽입한다.
+                파일이 없을 때도 화면이 비지 않도록 기본 placeholder를 둔다.
+            -->
+            <section class="empty-page-state">
+                <h1>Story Archive</h1>
+                <p>왼쪽 메뉴에서 페이지를 선택하세요.</p>
+            </section>
+        </main>
+        
+
+        <aside id="sub-sidebar">
+        </aside>
     </div>
-
-</div>
-
-<!-- 메인 컨텐츠 비회원은 그냥 소개템플릿, 회원은 대쉬보드. -->
-
-<main class="page-content" id="pageContent">
-</main>
-
-
-<script src="./js/archive/archive.js"></script>
-<script src="./js/editor/editor.js"></script>
-<script src="./js/auth.js"></script>
-<script type="text/javascript" src="./js/main.js"></script>
+<!-- 공통 동작: 페이지 로딩, 테마 선택, 글자 크기 설정 -->
+<script src="./js/main.js"></script>
 </body>
 </html>
